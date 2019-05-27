@@ -1,6 +1,6 @@
 import io.restassured.RestAssured;
-import io.restassured.response.ValidatableResponse;
 import org.junit.Test;
+
 
 public class PetStoreTest {
     static {
@@ -15,10 +15,10 @@ public class PetStoreTest {
 
     @Test
     public void getPetByIdTest() {
-        int petId = 2;
+        int petId = 26;
 
         RestAssured.given()
-                //.log().uri()
+                .log().uri()
                 .get(Config.GET_PET_BY_ID, petId)
                 .then()
                 .log().all()
@@ -26,7 +26,7 @@ public class PetStoreTest {
     }
 
     @Test
-    public void getPetByStatus() {
+    public void getPetByStatusTest() {
 
         RestAssured.given()
                 .param("status", Status.AVAILABLE)
@@ -36,5 +36,41 @@ public class PetStoreTest {
                 .log().all()
                 .statusCode(200);
 
+
+        String[] statuses = {"AVAILABLE", "PENDING", "SOLD"};
+        for (String i : statuses) {
+            System.out.println(i);
+        }
     }
+
+//    @Test
+//    public void postPetTest() {
+//        String newPet = "{}";
+// //Newline is replaced with \n.
+// //Double quote is replaced with \"
+//
+//        RestAssured.given()
+//                .body(newPet)
+//                .log().uri()
+//                .get(Config.POST_PET)
+//                .then()
+//                .log().all()
+//                .statusCode(200);
+//    }
+//
+
+    @Test
+    public void deletePetByIdTest(){
+
+       int petId =25;
+
+        RestAssured.given()
+                //.log().uri()
+                .get(Config.DELETE_PET_BY_ID, petId)
+                .then()
+                .log().all()
+                .statusCode(200);
+
+    }
+
 }
