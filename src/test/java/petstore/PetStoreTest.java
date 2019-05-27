@@ -1,5 +1,10 @@
+package petstore;
+
 import io.restassured.RestAssured;
 import org.junit.Test;
+import petstore.models.CategoryModel;
+import petstore.models.PetModel;
+import petstore.models.TagModel;
 
 
 public class PetStoreTest {
@@ -28,36 +33,39 @@ public class PetStoreTest {
     @Test
     public void getPetByStatusTest() {
 
-        RestAssured.given()
-                .param("status", Status.AVAILABLE)
-                .log().uri()
-                .get(Config.GET_PET_BY_STATUS)
-                .then()
-                .log().all()
-                .statusCode(200);
+        for (Status status : Status.values()) {
+            RestAssured.given()
+                    .param("status", status)
+                    .log().uri()
+                    .get(Config.GET_PET_BY_STATUS)
+                    .then()
+                    .log().all()
+                    .statusCode(200);
 
-
-        String[] statuses = {"AVAILABLE", "PENDING", "SOLD"};
-        for (String i : statuses) {
-            System.out.println(i);
         }
     }
 
-//    @Test
-//    public void postPetTest() {
-//        String newPet = "{}";
-// //Newline is replaced with \n.
-// //Double quote is replaced with \"
-//
-//        RestAssured.given()
-//                .body(newPet)
-//                .log().uri()
-//                .get(Config.POST_PET)
-//                .then()
-//                .log().all()
-//                .statusCode(200);
-//    }
-//
+    @Test
+    public void createPetTest() {
+        PetModel petModel = new PetModel(
+                98,
+               new CategoryModel(),
+                "Lilushechka",
+                new String[]{"www.zoo.com"},
+                new TagModel[] {new TagModel()},
+                "AVAILABLE");
+
+        RestAssured.given()
+                .log().uri()
+                //.header("Content-Type","application/xml")
+                .contentType("application/xml")
+                .body(petModel)
+                .post(Config.CREATE_PET)
+                .then()
+                .log().all()
+                .statusCode(200);
+    }
+
 
     @Test
     public void deletePetByIdTest(){
