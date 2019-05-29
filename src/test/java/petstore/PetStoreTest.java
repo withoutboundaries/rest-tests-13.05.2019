@@ -58,7 +58,7 @@ public class PetStoreTest {
         RestAssured.given()
                 .log().uri()
                 //.header("Content-Type","application/xml")
-                .contentType("application/xml")
+                .contentType("application/json")
                 .body(petModel)
                 .post(Config.CREATE_PET)
                 .then()
