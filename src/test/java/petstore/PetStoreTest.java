@@ -74,7 +74,7 @@ public class PetStoreTest {
 
         RestAssured.given()
                 //.log().uri()
-                .get(Config.DELETE_PET_BY_ID, petId)
+                .delete(Config.DELETE_PET_BY_ID, petId)
                 .then()
                 .log().all()
                 .statusCode(200);
