@@ -1,8 +1,8 @@
 package petstore;
 
 import io.restassured.RestAssured;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import petstore.models.CategoryModel;
 import petstore.models.PetModel;
@@ -16,7 +16,7 @@ public class PetUpdateTest {
     }
 
 
-    @BeforeClass
+    @BeforeMethod
     public void beforeTest() {
         PetModel petModel = new PetModel(
                 135,
@@ -38,7 +38,7 @@ public class PetUpdateTest {
 
     }
 
-    @AfterClass
+    @AfterMethod
     public void afterMethod() {
         int petId = 135;
 
