@@ -3,8 +3,10 @@ package petstore.tests;
 import io.restassured.RestAssured;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.testng.annotations.*;
 import petstore.endpoints.PetEndPoint;
 import petstore.models.CategoryModel;
 import petstore.models.PetModel;
@@ -21,7 +23,7 @@ public class PetUpdateTest {
         petEndPoint = new PetEndPoint();
     }
 
-    @BeforeMethod
+    @Before
     public void beforeTest() {
         petModel = new PetModel(
                 137,
@@ -36,7 +38,7 @@ public class PetUpdateTest {
                 .statusCode(200);
     }
 
-    @AfterMethod
+    @After
     public void afterMethod() {
         int petId = 137;
         petEndPoint

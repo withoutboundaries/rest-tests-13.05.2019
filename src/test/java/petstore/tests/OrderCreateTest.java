@@ -18,6 +18,7 @@ public class OrderCreateTest {
 
     @Steps
     private OrderEndPoint orderEndPoint;
+
     private petstore.model.OrderModel orderModel;
     private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern( "yyyy-MM-dd'T'HH:mm:ss.SSSxxx" );
     private String currentDate = OffsetDateTime.now(ZoneOffset.UTC).format(dateFormat) ;
