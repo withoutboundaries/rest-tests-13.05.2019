@@ -1,18 +1,25 @@
 package petstore.tests;
 
 import io.restassured.RestAssured;
+import net.serenitybdd.junit.runners.SerenityRunner;
+import net.thucydides.core.annotations.Steps;
+import org.junit.runner.RunWith;
 import org.testng.annotations.*;
-import petstore.endpoints.Config;
-import petstore.endpoints.PetEndpoint;
+import petstore.endpoints.PetEndPoint;
 import petstore.models.CategoryModel;
 import petstore.models.PetModel;
 import petstore.models.TagModel;
 
-import static org.hamcrest.CoreMatchers.is;
 
+@RunWith(SerenityRunner.class)
 public class PetUpdateTest {
-    private PetEndpoint petEndpoint = new PetEndpoint();
+    @Steps
+    private PetEndPoint petEndPoint;
     private PetModel petModel;
+
+    public PetUpdateTest() {
+        petEndPoint = new PetEndPoint();
+    }
 
     @BeforeMethod
     public void beforeTest() {
@@ -24,7 +31,7 @@ public class PetUpdateTest {
                 new TagModel[]{new TagModel()},
                 "AVAILABLE");
 
-        petEndpoint
+        petEndPoint
                 .createPet(petModel)
                 .statusCode(200);
     }
@@ -32,7 +39,7 @@ public class PetUpdateTest {
     @AfterMethod
     public void afterMethod() {
         int petId = 137;
-        petEndpoint
+        petEndPoint
                 .deletePet(petModel.getId())
                 .statusCode(200);
     }
@@ -41,11 +48,11 @@ public class PetUpdateTest {
     public void updatePetTest() {
         petModel.setName("tiger");
         petModel.setStatus("SOLD");
-        petEndpoint
+        petEndPoint
                 .updatePet(petModel)
                 .statusCode(200);
 
-        petEndpoint
+        petEndPoint
                 .getPetById(petModel.getId())
                 .statusCode(200);
 

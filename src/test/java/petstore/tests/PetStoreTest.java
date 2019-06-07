@@ -1,22 +1,30 @@
 package petstore.tests;
 
+import net.serenitybdd.junit.runners.SerenityRunner;
+
+import net.thucydides.core.annotations.Steps;
 import org.junit.Test;
-import petstore.endpoints.PetEndpoint;
+import org.junit.runner.RunWith;
+import petstore.endpoints.PetEndPoint;
 import petstore.models.CategoryModel;
 import petstore.models.PetModel;
 import petstore.models.TagModel;
 
-import static petstore.endpoints.PetEndpoint.*;
 
-
+@RunWith(SerenityRunner.class)
 public class PetStoreTest {
-    private PetEndpoint petEndpoint=new PetEndpoint();
+    @Steps
+    private PetEndPoint petEndPoint;
+
+    public PetStoreTest() {
+        petEndPoint = new PetEndPoint();
+    }
 
 
     @Test
     public void getPetByIdTest() {
         int petId = 2;
-        petEndpoint
+        petEndPoint
                 .getPetById(petId)
                 .statusCode(200);
     }
@@ -24,8 +32,8 @@ public class PetStoreTest {
     @Test
     public void getPetByStatusTest() {
 
-        for (Status status : Status.values()) {
-            petEndpoint
+        for (PetEndPoint.Status status : PetEndPoint.Status.values()) {
+            petEndPoint
                     .getPetByStatus(status)
                     .statusCode(200);
         }
@@ -41,7 +49,7 @@ public class PetStoreTest {
                 new TagModel[] {new TagModel()},
                 "AVAILABLE");
 
-        petEndpoint
+        petEndPoint
                 .createPet(petModel)
                 .statusCode(200);
     }
@@ -54,7 +62,7 @@ public class PetStoreTest {
     public void deletePetByIdTest(){
        int petId =25;
 
-        petEndpoint
+        petEndPoint
                 .deletePet(petId)
                 .statusCode(200);
     }
